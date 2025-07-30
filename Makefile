@@ -10,12 +10,12 @@ NC=\033[0m # No Color
 init:
 	@echo "$(GREEN)🏀 Initializing Basketball Player Ranking project...$(NC)"
 	@echo "$(BLUE)Setting up Python virtual environment...$(NC)"
-	python -m venv venv
+	python3 -m venv venv
 	@echo "$(BLUE)Activating virtual environment and installing dependencies...$(NC)"
 	./venv/bin/pip install -r requirements.txt
 	./venv/bin/pip install -r requirements-dev.txt
-	@echo "$(BLUE)Setting up frontend (when implemented)...$(NC)"
-	@# cd frontend && npm install
+	@echo "$(BLUE)Setting up frontend...$(NC)"
+	cd frontend && npm install
 	@echo "$(GREEN)✅ Project initialized successfully!$(NC)"
 	@echo "$(YELLOW)Next steps:$(NC)"
 	@echo "  1. Copy .env.example to .env and configure your settings"
@@ -27,15 +27,16 @@ install:
 	./venv/bin/pip install -r requirements.txt
 	./venv/bin/pip install -r requirements-dev.txt
 	@echo "$(BLUE)Installing frontend dependencies...$(NC)"
-	@# cd frontend && npm install
+	cd frontend && npm install
 
 run_dev:
 	@echo "$(GREEN)🚀 Starting development servers...$(NC)"
-	@echo "$(YELLOW)Backend will be available at: http://localhost:5000$(NC)"
+	@echo "$(YELLOW)Backend will be available at: http://localhost:5002$(NC)"
 	@echo "$(YELLOW)Frontend will be available at: http://localhost:3000$(NC)"
-	@echo "$(RED)Note: Backend and frontend implementation pending$(NC)"
-	@# For now, just activate venv
-	@echo "$(BLUE)Virtual environment activated. Start implementing!$(NC)"
+	@echo "$(BLUE)Starting backend server...$(NC)"
+	FLASK_APP=backend.app FLASK_ENV=development ./venv/bin/flask run --host localhost --port 5002 &
+	@echo "$(BLUE)Starting frontend development server...$(NC)"
+	cd frontend && PORT=3000 npm run dev
 
 run_test:
 	@echo "$(BLUE)Running test suite...$(NC)"
