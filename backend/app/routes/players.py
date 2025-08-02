@@ -1,55 +1,34 @@
 from flask import Blueprint, jsonify, request
-from ..models.player import Player
-from ..services.player_service import PlayerService
 from http import HTTPStatus
+from backend import db
 
-bp = Blueprint('players', __name__, url_prefix='/api/players')
+bp = Blueprint('players', __name__)
 
-@bp.route('', methods=['POST'])
-def create_player():
-    try:
-        player = Player(**request.json)
-        created_player = PlayerService.create_player(player)
-        return jsonify(created_player.dict()), HTTPStatus.CREATED
-    except Exception as e:
-        return jsonify({"error": str(e)}), HTTPStatus.BAD_REQUEST
-
-@bp.route('', methods=['GET'])
+@bp.route('/players', methods=['GET'])
 def get_players():
-    try:
-        skip = int(request.args.get('skip', 0))
-        limit = int(request.args.get('limit', 100))
-        players = PlayerService.get_players(skip, limit)
-        return jsonify([player.dict() for player in players])
-    except Exception as e:
-        return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
+    """Get all players"""
+    database = db.get_db()
+    players = list(database.players.find({}, {'_id': False}))
+    return jsonify(players), HTTPStatus.OK
 
-@bp.route('/<player_id>', methods=['GET'])
+@bp.route('/players/<player_id>', methods=['GET'])
 def get_player(player_id):
-    try:
-        player = PlayerService.get_player(player_id)
-        if player:
-            return jsonify(player.dict())
-        return jsonify({"error": "Player not found"}), HTTPStatus.NOT_FOUND
-    except Exception as e:
-        return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
+    """Get a specific player"""
+    database = db.get_db()
+    player = database.players.find_one({'id': player_id}, {'_id': False})
+    if not player:
+        return jsonify({'error': 'Player not found'}), HTTPStatus.NOT_FOUND
+    return jsonify(player), HTTPStatus.OK
 
-@bp.route('/<player_id>', methods=['PUT'])
-def update_player(player_id):
-    try:
-        player = Player(**request.json)
-        updated_player = PlayerService.update_player(player_id, player)
-        if updated_player:
-            return jsonify(updated_player.dict())
-        return jsonify({"error": "Player not found"}), HTTPStatus.NOT_FOUND
-    except Exception as e:
-        return jsonify({"error": str(e)}), HTTPStatus.BAD_REQUEST
-
-@bp.route('/<player_id>', methods=['DELETE'])
-def delete_player(player_id):
-    try:
-        if PlayerService.delete_player(player_id):
-            return '', HTTPStatus.NO_CONTENT
-        return jsonify({"error": "Player not found"}), HTTPStatus.NOT_FOUND
-    except Exception as e:
-        return jsonify({"error": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
+@bp.route('/players', methods=['POST'])
+def create_player():
+    """Create a new player"""
+    player_data = request.get_json()
+    if not player_data:
+        return jsonify({'error': 'No data provided'}), HTTPStatus.BAD_REQUEST
+    
+    database = db.get_db()
+    result = database.players.insert_one(player_data)
+    if result.inserted_id:
+        return jsonify({'message': 'Player created successfully'}), HTTPStatus.CREATED
+    return jsonify({'error': 'Failed to create player'}), HTTPStatus.INTERNAL_SERVER_ERROR
