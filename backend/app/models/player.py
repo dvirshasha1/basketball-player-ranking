@@ -36,16 +36,30 @@ class DefensiveStats(BaseModel):
             raise ValueError('Stat must be between 0 and 100')
         return v
 
-class Player(BaseModel):
-    id: Optional[str] = None
-    name: str = Field(..., min_length=2, max_length=50)
-    team: str
-    position: Position
-    offense: Stats
-    defense: DefensiveStats
-    overall_score: float = 0.0
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+class Player:
+    def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
+        self.name = kwargs['name']
+        self.team = kwargs['team']
+        self.position = kwargs['position']
+        self.offense = kwargs['offense']
+        self.defense = kwargs['defense']
+        self.overall_score = kwargs.get('overall_score', 0.0)
+        self.created_at = kwargs.get('created_at')
+        self.updated_at = kwargs.get('updated_at')
+
+    def dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'team': self.team,
+            'position': self.position,
+            'offense': self.offense,
+            'defense': self.defense,
+            'overall_score': self.overall_score,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
 
     def calculate_overall_score(self) -> float:
         """Calculate overall score based on offensive and defensive stats"""

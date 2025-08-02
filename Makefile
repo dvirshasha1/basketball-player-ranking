@@ -34,7 +34,7 @@ run_dev:
 	@echo "$(YELLOW)Backend will be available at: http://localhost:5002$(NC)"
 	@echo "$(YELLOW)Frontend will be available at: http://localhost:3000$(NC)"
 	@echo "$(BLUE)Starting backend server...$(NC)"
-	FLASK_APP=backend.app FLASK_ENV=development ./venv/bin/flask run --host localhost --port 5002 &
+	cd backend && FLASK_APP=app FLASK_ENV=development ../venv/bin/flask run --host localhost --port 5002 &
 	@echo "$(BLUE)Starting frontend development server...$(NC)"
 	cd frontend && PORT=3000 npm run dev
 

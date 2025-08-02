@@ -3,7 +3,6 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 from http import HTTPStatus
-from . import db
 
 def create_app(config=None):
     load_dotenv()
@@ -25,6 +24,7 @@ def create_app(config=None):
         app.config.update(config)
     
     # Register database handlers
+    from backend import db
     app.teardown_appcontext(db.close_db)
     
     # Register error handlers

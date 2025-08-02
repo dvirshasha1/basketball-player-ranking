@@ -14,13 +14,13 @@
 Set up the complete development environment for the basketball player ranking application, including backend Python environment, frontend JavaScript framework, database configuration, and development tooling.
 
 ### Acceptance Criteria
-- [ ] Python virtual environment created with Flask/FastAPI
-- [ ] Frontend framework (React/Vue) initialized
-- [ ] Database (MongoDB/PostgreSQL) configured and connected
-- [ ] All Makefile commands functional (`init`, `install`, `run_dev`, `run_test`)
-- [ ] Development environment variables configured
-- [ ] Basic project structure matches OpenCode.md specifications
-- [ ] Both backend and frontend servers start without errors
+- [x] Python virtual environment created with Flask/FastAPI
+- [x] Frontend framework (React/Vue) initialized
+- [x] Database (MongoDB/PostgreSQL) configured and connected
+- [x] All Makefile commands functional (`init`, `install`, `run_dev`, `run_test`)
+- [x] Development environment variables configured
+- [x] Basic project structure matches OpenCode.md specifications
+- [x] Both backend and frontend servers start without errors
 
 ### Technical Requirements
 - Python 3.9+
@@ -30,12 +30,12 @@ Set up the complete development environment for the basketball player ranking ap
 - CORS configured for local development
 
 ### Definition of Done
-- [ ] `make init` successfully sets up entire project
-- [ ] `make run_dev` starts both servers (backend:5000, frontend:3000)
-- [ ] Basic "Hello World" API endpoint returns JSON
-- [ ] Frontend displays basic welcome page
-- [ ] Database connection verified
-- [ ] All dependencies installed correctly
+- [x] `make init` successfully sets up entire project
+- [x] `make run_dev` starts both servers (backend:5002, frontend:3000)
+- [x] Basic "Hello World" API endpoint returns JSON
+- [x] Frontend displays basic welcome page
+- [x] Database connection verified
+- [x] All dependencies installed correctly
 
 ### Estimated Time: 8-12 hours
 
@@ -49,17 +49,17 @@ Set up the complete development environment for the basketball player ranking ap
 Implement the core backend infrastructure including the Player data model, database schemas, and basic CRUD API endpoints for player management.
 
 ### Acceptance Criteria
-- [ ] Player model implemented with complete schema (offense/defense stats)
-- [ ] Database migrations created and working
-- [ ] Basic CRUD API endpoints functional:
+- [x] Player model implemented with complete schema (offense/defense stats)
+- [x] Database migrations created and working
+- [x] Basic CRUD API endpoints functional:
   - `GET /api/players` - List all players
   - `GET /api/players/:id` - Get single player
   - `POST /api/players` - Create new player
   - `PUT /api/players/:id` - Update player
   - `DELETE /api/players/:id` - Delete player
-- [ ] Overall score calculation service implemented
-- [ ] Input validation for all endpoints
-- [ ] Error handling with proper HTTP status codes
+- [x] Overall score calculation service implemented
+- [x] Input validation for all endpoints
+- [x] Error handling with proper HTTP status codes
 
 ### Technical Specifications
 ```python
@@ -105,11 +105,11 @@ Implement the core backend infrastructure including the Player data model, datab
 - `tests/backend/test_player_api.py`
 
 ### Definition of Done
-- [ ] All API endpoints tested with Postman/curl
-- [ ] Proper error responses (400, 404, 500)
-- [ ] Overall score automatically calculated on create/update
-- [ ] Database relationships working correctly
-- [ ] All tests passing with >80% coverage
+- [x] All API endpoints tested with Postman/curl
+- [x] Proper error responses (400, 404, 500)
+- [x] Overall score automatically calculated on create/update
+- [x] Database relationships working correctly
+- [x] All tests passing with >80% coverage
 
 ### Estimated Time: 12-16 hours
 

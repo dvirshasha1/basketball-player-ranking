@@ -1,5 +1,4 @@
 from flask import Blueprint, jsonify
-from . import players
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -10,5 +9,6 @@ def health_check():
         "message": "Basketball Player Ranking API is running"
     })
 
-# Register player routes
+# Import and register player routes
+from backend.app.routes import players
 bp.register_blueprint(players.bp)

@@ -1,6 +1,6 @@
 import pytest
-from backend.app import create_app
-from backend.app.db import get_db
+from backend import create_app
+from backend.db import get_db
 
 @pytest.fixture
 def app():
